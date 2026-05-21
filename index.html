@@ -4,9 +4,285 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ModaGrid | متجر الأزياء الفاخرة</title>
-<meta http-equiv="refresh" content="0; url=./modagrid.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0D1B2A;--navy2:#162439;--navy3:#1E3A5F;--ivory:#F8F7F2;--ivory2:#EEECEA;--cyan:#00B4D8;--cyan2:#0096B4;--cyan3:#CAF0F8;--gold:#C9A96E;--g50:#F9FAFB;--g100:#F3F4F6;--g200:#E5E7EB;--g300:#D1D5DB;--g400:#9CA3AF;--g500:#6B7280;--ok:#10B981;--err:#EF4444;--warn:#F59E0B;--sh0:0 1px 3px rgba(13,27,42,.07);--sh1:0 4px 16px rgba(13,27,42,.10);--sh2:0 12px 40px rgba(13,27,42,.16);--sh3:0 24px 64px rgba(13,27,42,.24);--ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);--rf:9999px;--hdr:68px}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Cairo',sans-serif;background:var(--ivory);color:var(--navy);direction:rtl;min-height:100vh;overflow-x:hidden}
+img{display:block;max-width:100%}
+button{font-family:'Cairo',sans-serif;cursor:pointer;border:none;background:none}
+input,select{font-family:'Cairo',sans-serif;outline:none}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--ivory2)}
+::-webkit-scrollbar-thumb{background:var(--navy3);border-radius:var(--rf)}
+.view{display:none}.view.on{display:block;animation:fadeUp .4s var(--ease) both}.hide{display:none!important}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@keyframes blob{0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%}50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%}}
+@keyframes toastIn{from{transform:translateX(110%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.hdr{position:sticky;top:0;z-index:900;height:var(--hdr);background:rgba(13,27,42,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06)}
+.hdr-in{max-width:1300px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0}
+.logo-m{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;box-shadow:0 4px 12px rgba(0,180,216,.4)}
+.logo-t{font-size:20px;font-weight:900;color:#fff;letter-spacing:-.5px}
+.logo-t em{color:var(--cyan);font-style:normal}
+.nav{flex:1;display:flex;align-items:center;justify-content:center;gap:4px}
+.nv{padding:7px 15px;border-radius:var(--rf);font-size:13.5px;font-weight:600;color:rgba(255,255,255,.65);transition:all .2s;white-space:nowrap}
+.nv:hover{color:#fff;background:rgba(255,255,255,.07)}.nv.on{color:var(--cyan);background:rgba(0,180,216,.12)}
+.hdr-r{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.lang-btn{padding:6px 13px;border:1px solid rgba(255,255,255,.18);border-radius:var(--rf);color:rgba(255,255,255,.7);font-size:12px;font-weight:700;letter-spacing:.5px;transition:all .15s}
+.lang-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.adm-btn{padding:6px 13px;border:1px solid rgba(255,255,255,.18);border-radius:var(--rf);color:rgba(255,255,255,.7);font-size:12px;font-weight:700;transition:all .15s}
+.adm-btn:hover{border-color:var(--gold);color:var(--gold)}
+.cart-btn{position:relative;width:44px;height:44px;border-radius:var(--rf);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;transition:all .2s}
+.cart-btn:hover{background:var(--cyan);border-color:var(--cyan)}
+.cart-n{position:absolute;top:-5px;left:-5px;min-width:20px;height:20px;background:var(--cyan);border:2.5px solid var(--navy);border-radius:var(--rf);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 4px;animation:popIn .2s var(--spring) both}
+.mob-nav{display:none;overflow-x:auto;scrollbar-width:none;gap:8px;padding:10px 16px;background:var(--navy2);border-bottom:1px solid rgba(255,255,255,.06)}
+.mob-nav::-webkit-scrollbar{display:none}
+.mob-nv{flex-shrink:0;padding:7px 15px;border-radius:var(--rf);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.65);font-size:13px;font-weight:600;white-space:nowrap;transition:all .15s}
+.mob-nv.on{background:var(--cyan);border-color:var(--cyan);color:#fff}
+.cart-ov{position:fixed;inset:0;background:rgba(13,27,42,.65);backdrop-filter:blur(6px);z-index:1000;opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility .3s}
+.cart-ov.open{opacity:1;visibility:visible}
+.cart-pan{position:absolute;top:0;right:0;width:min(430px,100vw);height:100%;background:#fff;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .4s var(--ease);box-shadow:var(--sh3)}
+.cart-ov.open .cart-pan{transform:translateX(0)}
+.cart-hd{padding:20px;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.cart-hd h3{font-size:17px;font-weight:800;color:var(--navy)}
+.cart-x{width:34px;height:34px;border-radius:50%;background:var(--g100);color:var(--g500);font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.cart-x:hover{background:var(--err);color:#fff}
+.cart-body{flex:1;overflow-y:auto;padding:16px}
+.cart-empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--g400)}
+.cart-empty .eico{font-size:58px}
+.cart-empty h4{font-size:15px;color:var(--g500)}
+.c-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;padding:14px;border-radius:14px;background:var(--ivory);border:1px solid var(--g200);margin-bottom:10px;transition:border-color .15s}
+.c-item:hover{border-color:var(--cyan3)}
+.ci-img{width:76px;height:76px;border-radius:8px;object-fit:cover;background:var(--g200)}
+.ci-info{display:flex;flex-direction:column;gap:4px;min-width:0}
+.ci-name{font-size:13px;font-weight:700;color:var(--navy);line-height:1.3}
+.ci-meta{font-size:11px;color:var(--g400)}
+.ci-price{font-size:13px;font-weight:800;color:var(--cyan2)}
+.ci-qty{display:flex;align-items:center;gap:6px;margin-top:6px}
+.q-b{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--g200);background:#fff;color:var(--navy);font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.q-b:hover{background:var(--cyan);border-color:var(--cyan);color:#fff}
+.q-n{font-size:13px;font-weight:700;color:var(--navy);min-width:20px;text-align:center}
+.ci-del{align-self:flex-start;width:26px;height:26px;border-radius:50%;color:var(--g300);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.ci-del:hover{background:rgba(239,68,68,.1);color:var(--err)}
+.cart-ft{padding:16px 20px;border-top:1px solid var(--g200);background:#fff;flex-shrink:0}
+.tots .tr{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px;color:var(--g500)}
+.tots .tr.big{border-top:2px solid var(--g200);margin-top:8px;padding-top:12px;font-size:17px;font-weight:800;color:var(--navy)}
+.go-btn{width:100%;margin-top:14px;padding:15px;background:var(--cyan);color:#fff;border-radius:12px;font-size:15px;font-weight:800;transition:all .25s;box-shadow:0 4px 14px rgba(0,180,216,.4);display:flex;align-items:center;justify-content:center;gap:8px}
+.go-btn:hover:not(:disabled){background:var(--cyan2);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,180,216,.5)}
+.go-btn:disabled{background:var(--g200);color:var(--g400);box-shadow:none}
+.hero{background:var(--navy);padding:80px 24px 88px;text-align:center;position:relative;overflow:hidden}
+.hblob{position:absolute;opacity:.1;pointer-events:none;border-radius:60% 40% 30% 70%/60% 30% 70% 40%;animation:blob 14s ease-in-out infinite}
+.hblob1{width:500px;height:500px;background:var(--cyan);top:-220px;right:-80px}
+.hblob2{width:380px;height:380px;background:var(--gold);bottom:-180px;left:-60px;animation-delay:-6s;animation-duration:18s}
+.h-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;margin-bottom:22px;background:rgba(0,180,216,.12);border:1px solid rgba(0,180,216,.25);border-radius:var(--rf);color:var(--cyan);font-size:12.5px;font-weight:700;letter-spacing:.4px}
+.hero h1{font-size:clamp(30px,5.5vw,56px);color:#fff;font-weight:900;line-height:1.18;letter-spacing:-.5px;margin-bottom:18px}
+.hero h1 em{color:var(--cyan);font-style:normal}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto 36px;line-height:1.75}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-c{padding:13px 28px;background:var(--cyan);color:#fff;border-radius:var(--rf);font-size:14.5px;font-weight:800;transition:all .25s;box-shadow:0 4px 16px rgba(0,180,216,.4);display:inline-flex;align-items:center;gap:8px}
+.btn-c:hover{background:var(--cyan2);transform:translateY(-2px)}
+.btn-gw{padding:12px 26px;border:1.5px solid rgba(255,255,255,.25);border-radius:var(--rf);color:rgba(255,255,255,.85);font-size:14.5px;font-weight:700;transition:all .25s;display:inline-flex;align-items:center;gap:8px}
+.btn-gw:hover{border-color:var(--gold);color:var(--gold)}
+.cats{max-width:1300px;margin:0 auto;padding:44px 24px 20px}
+.sec-t{font-size:21px;font-weight:800;color:var(--navy);margin-bottom:20px}
+.sec-t em{color:var(--cyan);font-style:normal}
+.cat-tabs{display:flex;gap:10px;flex-wrap:wrap}
+.cat-tab{display:flex;align-items:center;gap:7px;padding:10px 20px;border-radius:var(--rf);border:1.5px solid var(--g200);background:#fff;color:var(--g500);font-size:13.5px;font-weight:700;transition:all .25s;box-shadow:var(--sh0)}
+.cat-tab:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px)}
+.cat-tab.on{background:var(--navy);border-color:var(--navy);color:#fff;transform:translateY(-2px)}
+.prods{max-width:1300px;margin:0 auto;padding:24px 24px 72px}
+.prods-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.prods-hd .tt{font-size:19px;font-weight:800;color:var(--navy)}
+.prods-hd .ct{font-size:13px;color:var(--g400)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:22px}
+.card{background:#fff;border-radius:18px;overflow:hidden;border:1px solid rgba(0,0,0,.05);box-shadow:var(--sh0);display:flex;flex-direction:column;transition:transform .35s var(--ease),box-shadow .35s var(--ease);animation:cardIn .4s var(--ease) both}
+.card:hover{transform:translateY(-8px);box-shadow:var(--sh2)}.card.oos{opacity:.72}
+.img-w{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--g100);flex-shrink:0}
+.img-w img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.card:hover .img-w img{transform:scale(1.07)}
+.img-shine{position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15) 0%,transparent 60%);pointer-events:none;z-index:1}
+.badges{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:5px;z-index:2}
+.bdg{padding:4px 9px;border-radius:var(--rf);font-size:10.5px;font-weight:800;letter-spacing:.4px}
+.bdg-new{background:var(--cyan);color:#fff}.bdg-oos{background:rgba(239,68,68,.88);color:#fff}.bdg-low{background:rgba(245,158,11,.88);color:#fff}
+.card-body{padding:18px;display:flex;flex-direction:column;flex:1}
+.c-cat{font-size:10.5px;font-weight:700;color:var(--cyan2);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.c-name{font-size:15.5px;font-weight:800;color:var(--navy);line-height:1.35;margin-bottom:3px}
+.c-sub{font-size:11px;color:var(--g400);margin-bottom:12px}
+.c-price{font-size:20px;font-weight:900;color:var(--navy);margin-bottom:14px}
+.c-price small{font-size:12px;font-weight:500;color:var(--g400)}
+.sel-lbl{font-size:12px;font-weight:600;color:var(--g500);margin-bottom:7px}
+.sel-lbl strong{color:var(--navy)}
+.dots{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.dot{width:25px;height:25px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.dot:hover{transform:scale(1.2)}.dot.on{border-color:var(--navy);box-shadow:0 0 0 3px rgba(0,180,216,.35)}
+.szs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.sz{min-width:36px;height:30px;padding:0 8px;border:1.5px solid var(--g200);border-radius:8px;background:#fff;color:var(--g500);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.sz:hover{border-color:var(--cyan);color:var(--cyan)}.sz.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.c-foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--g200)}
+.add-btn{width:100%;padding:11px;border-radius:8px;font-size:13.5px;font-weight:800;transition:all .25s;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;gap:7px}
+.add-btn:hover:not(:disabled){background:var(--cyan);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,180,216,.4)}
+.add-btn:disabled{background:var(--g200);color:var(--g400);cursor:not-allowed}.add-btn.added{background:var(--ok)}
+.co-pg{max-width:620px;margin:0 auto;padding:44px 24px}
+.pg-hd{display:flex;align-items:center;gap:14px;margin-bottom:36px}
+.bk{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--g200);background:#fff;color:var(--navy);font-size:17px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.bk:hover{border-color:var(--cyan);background:var(--cyan);color:#fff}
+.pg-hd h2{font-size:24px;font-weight:900;color:var(--navy)}
+.cod-note{display:flex;align-items:flex-start;gap:12px;padding:16px;background:rgba(0,180,216,.07);border:1px solid rgba(0,180,216,.18);border-radius:12px;margin-bottom:24px}
+.cod-note .ico{font-size:26px;flex-shrink:0}
+.cod-note h4{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:3px}
+.cod-note p{font-size:12.5px;color:var(--g500);line-height:1.6}
+.f-card{background:#fff;border-radius:18px;padding:28px;box-shadow:var(--sh1);margin-bottom:20px;border:1px solid rgba(0,0,0,.05)}
+.f-card h3{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:22px;padding-bottom:12px;border-bottom:2px solid var(--cyan3);display:flex;align-items:center;gap:8px}
+.field{margin-bottom:18px}
+.f-lbl{display:block;font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:8px}
+.f-lbl .req{color:var(--cyan)}
+.f-in,.f-sel{width:100%;padding:13px 15px;border:1.5px solid var(--g200);border-radius:8px;font-size:14px;color:var(--navy);background:#fff;transition:all .15s}
+.f-in:focus,.f-sel:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,180,216,.12)}
+.f-in::placeholder{color:var(--g300)}
+.f-sel{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 13px center;padding-left:40px}
+.s-items{margin-bottom:14px}
+.s-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--g200)}
+.s-item:last-child{border:0}
+.s-img{width:50px;height:50px;border-radius:8px;object-fit:cover;background:var(--g200);flex-shrink:0}
+.s-info{flex:1;min-width:0}
+.s-name{font-size:12.5px;font-weight:700;color:var(--navy)}
+.s-meta{font-size:11px;color:var(--g400)}
+.s-price{font-size:13.5px;font-weight:800;color:var(--navy);white-space:nowrap}
+.s-total{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--navy);border-radius:8px;color:#fff;font-weight:800;font-size:15px}
+.sub-btn{width:100%;margin-top:22px;padding:17px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:#fff;border-radius:14px;font-size:16px;font-weight:900;transition:all .25s;box-shadow:0 6px 20px rgba(0,180,216,.45);display:flex;align-items:center;justify-content:center;gap:10px}
+.sub-btn:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,180,216,.55)}
+.ok-pg{min-height:calc(100vh - var(--hdr));display:flex;align-items:center;justify-content:center;padding:44px 24px}
+.ok-card{background:#fff;border-radius:24px;padding:48px 40px;max-width:500px;width:100%;text-align:center;box-shadow:var(--sh2);animation:popIn .5s var(--spring) both}
+.ok-ico{width:78px;height:78px;border-radius:50%;background:rgba(16,185,129,.1);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 22px}
+.ok-card h2{font-size:24px;font-weight:900;color:var(--navy);margin-bottom:10px}
+.ok-card p{font-size:14px;color:var(--g500);line-height:1.75;margin-bottom:22px}
+.ok-ref{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;background:var(--navy);color:#fff;border-radius:var(--rf);font-size:13px;font-weight:800;letter-spacing:1px;margin-bottom:30px}
+.ok-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-n{padding:12px 24px;background:var(--navy);color:#fff;border-radius:var(--rf);font-size:13.5px;font-weight:700;transition:all .2s;display:inline-flex;align-items:center;gap:7px}
+.btn-n:hover{background:var(--navy2);transform:translateY(-2px)}
+.btn-on{padding:11px 22px;border:1.5px solid var(--navy);border-radius:var(--rf);color:var(--navy);font-size:13.5px;font-weight:700;transition:all .2s}
+.btn-on:hover{background:var(--navy);color:#fff}
+.adm-lg{min-height:calc(100vh - var(--hdr));display:flex;align-items:center;justify-content:center;padding:44px 24px}
+.lg-card{background:#fff;border-radius:24px;padding:44px 36px;max-width:400px;width:100%;box-shadow:var(--sh2);text-align:center;animation:popIn .5s var(--spring) both}
+.lg-ico{width:68px;height:68px;border-radius:16px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px;box-shadow:0 8px 24px rgba(13,27,42,.25)}
+.lg-card h2{font-size:21px;font-weight:900;color:var(--navy);margin-bottom:6px}
+.lg-card .sub{font-size:13px;color:var(--g500);margin-bottom:28px}
+.lg-btn{width:100%;margin-top:10px;padding:14px;background:var(--navy);color:#fff;border-radius:8px;font-size:15px;font-weight:800;transition:all .2s;box-shadow:0 4px 12px rgba(13,27,42,.2);display:flex;align-items:center;justify-content:center;gap:8px}
+.lg-btn:hover{background:var(--navy2);transform:translateY(-2px)}
+.hint-t{margin-top:16px;font-size:12px;color:var(--g300)}
+.bk-link{margin-top:14px;width:100%;padding:10px;border-radius:8px;color:var(--g500);font-size:13px;font-weight:600;transition:all .15s}
+.bk-link:hover{background:var(--g100);color:var(--navy)}
+.adm-dash{max-width:1300px;margin:0 auto;padding:36px 24px}
+.adm-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:28px}
+.adm-top h2{font-size:22px;font-weight:900;color:var(--navy)}
+.adm-acts{display:flex;gap:8px;align-items:center}
+.adm-bk{padding:8px 16px;border-radius:8px;border:1.5px solid var(--g200);background:#fff;color:var(--navy);font-size:13px;font-weight:700;transition:all .15s;display:flex;align-items:center;gap:6px}
+.adm-bk:hover{border-color:var(--cyan);color:var(--cyan)}
+.lg-out{padding:8px 16px;border-radius:8px;border:1.5px solid rgba(239,68,68,.3);background:transparent;color:var(--err);font-size:13px;font-weight:700;transition:all .15s}
+.lg-out:hover{background:var(--err);color:#fff;border-color:var(--err)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:28px}
+.stat{background:#fff;border-radius:12px;padding:18px;box-shadow:var(--sh0);border:1px solid var(--g200);display:flex;align-items:center;gap:14px}
+.st-ico{width:46px;height:46px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.st-ico.c{background:rgba(0,180,216,.1)}.st-ico.g{background:rgba(16,185,129,.1)}.st-ico.n{background:rgba(13,27,42,.07)}.st-ico.o{background:rgba(245,158,11,.1)}
+.st-v{font-size:22px;font-weight:900;color:var(--navy);line-height:1;margin-bottom:3px}
+.st-k{font-size:11.5px;color:var(--g400)}
+.adm-tabs{display:flex;gap:4px;border-bottom:2px solid var(--g200);margin-bottom:24px}
+.a-tab{padding:11px 18px;font-size:13.5px;font-weight:700;color:var(--g500);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;display:flex;align-items:center;gap:7px}
+.a-tab:hover{color:var(--navy)}.a-tab.on{color:var(--cyan2);border-bottom-color:var(--cyan)}
+.a-tab .cn{background:var(--cyan);color:#fff;padding:1px 7px;border-radius:var(--rf);font-size:10.5px;font-weight:800}
+.a-tc{display:none}.a-tc.on{display:block}
+.tbl-w{background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--sh0);border:1px solid var(--g200);overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;min-width:700px}
+.tbl th{padding:14px 16px;background:var(--navy);color:rgba(255,255,255,.75);font-size:12px;font-weight:700;text-align:right;white-space:nowrap;letter-spacing:.3px}
+.tbl td{padding:14px 16px;border-bottom:1px solid var(--g200);font-size:13px;color:var(--navy);vertical-align:middle}
+.tbl tr:last-child td{border:0}.tbl tbody tr:hover td{background:var(--ivory)}
+.p-img{width:44px;height:44px;border-radius:8px;object-fit:cover;background:var(--g200);flex-shrink:0}
+.p-wrap{display:flex;align-items:center;gap:10px}
+.p-nm{font-size:13px;font-weight:700}.p-fr{font-size:10.5px;color:var(--g400)}
+.e-in{width:80px;padding:6px 10px;border:1.5px solid var(--g200);border-radius:8px;font-size:13px;text-align:center;color:var(--navy);transition:all .15s}
+.e-in:focus{outline:none;border-color:var(--cyan)}.e-in.w{width:110px}
+.upd{padding:6px 13px;background:var(--cyan);color:#fff;border-radius:8px;font-size:12px;font-weight:700;transition:all .15s;white-space:nowrap}
+.upd:hover{background:var(--cyan2)}
+.s-bdg{display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:var(--rf);font-size:11px;font-weight:700}
+.s-in{background:rgba(16,185,129,.1);color:#059669}.s-lw{background:rgba(245,158,11,.1);color:#B45309}.s-ot{background:rgba(239,68,68,.1);color:#DC2626}
+.o-sel{padding:5px 8px;border:1.5px solid var(--g200);border-radius:8px;font-size:12px;color:var(--navy);background:#fff;cursor:pointer;transition:all .15s}
+.o-sel:focus{outline:none;border-color:var(--cyan)}
+.j-btn{padding:4px 10px;border:1.5px solid var(--g200);border-radius:8px;font-size:11.5px;font-weight:700;color:var(--navy);transition:all .15s;white-space:nowrap}
+.j-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.j-box{background:var(--navy);border-radius:8px;padding:14px;color:var(--cyan3);font-family:monospace;font-size:11.5px;line-height:1.65;overflow:auto;white-space:pre;max-height:260px;margin-top:10px}
+.empty-adm{text-align:center;padding:60px 24px;color:var(--g400)}
+.empty-adm .eico{font-size:52px;margin-bottom:12px}
+.empty-adm h4{font-size:15px;color:var(--g500);margin-bottom:6px}
+.toast-w{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+.toast{display:flex;align-items:center;gap:10px;padding:13px 18px;background:var(--navy);color:#fff;border-radius:12px;box-shadow:var(--sh2);font-size:13.5px;font-weight:700;min-width:260px;max-width:340px;animation:toastIn .35s var(--ease) both}
+.toast.s{border-right:4px solid var(--ok)}.toast.e{border-right:4px solid var(--err)}.toast.w{border-right:4px solid var(--warn)}.toast.i{border-right:4px solid var(--cyan)}
+@media(max-width:900px){.nav{display:none}.mob-nav{display:flex}}
+@media(max-width:640px){.hdr-in{padding:0 16px;gap:10px}.logo-t{font-size:17px}.hero{padding:52px 18px 60px}.grid{grid-template-columns:repeat(2,1fr);gap:14px}.card-body{padding:14px}.c-name{font-size:13.5px}.c-price{font-size:17px}.cats,.prods{padding-left:16px;padding-right:16px}.ok-card,.lg-card{padding:36px 24px}.adm-dash{padding:24px 16px}.stats{grid-template-columns:1fr 1fr}.co-pg{padding:32px 16px}.f-card{padding:22px}}
+@media(max-width:400px){.lang-btn,.adm-btn{display:none}}
+</style>
 </head>
 <body>
-<script>window.location.href='./modagrid.html'</script>
+<header class="hdr"><div class="hdr-in"><div class="logo" onclick="goTo('store')"><div class="logo-m">MG</div><div class="logo-t">Moda<em>Grid</em></div></div><nav class="nav"><button class="nv on" data-cat="all" onclick="filterCat('all')">كل المنتجات</button><button class="nv" data-cat="shirts" onclick="filterCat('shirts')">👔 القمصان</button><button class="nv" data-cat="pants" onclick="filterCat('pants')">👖 السراويل</button><button class="nv" data-cat="medical" onclick="filterCat('medical')">🏥 ملابس طبية</button><button class="nv" data-cat="shoes" onclick="filterCat('shoes')">👟 الأحذية</button></nav><div class="hdr-r"><button class="lang-btn" id="langBtn" onclick="toggleLang()">FR</button><button class="adm-btn" onclick="goTo('admin')">⚙️ Admin</button><button class="cart-btn" onclick="openCart()">🛒<span class="cart-n hide" id="cartN">0</span></button></div></div></header>
+<nav class="mob-nav"><button class="mob-nv on" data-cat="all" onclick="filterCat('all')">الكل</button><button class="mob-nv" data-cat="shirts" onclick="filterCat('shirts')">👔 قمصان</button><button class="mob-nv" data-cat="pants" onclick="filterCat('pants')">👖 سراويل</button><button class="mob-nv" data-cat="medical" onclick="filterCat('medical')">🏥 طبية</button><button class="mob-nv" data-cat="shoes" onclick="filterCat('shoes')">👟 أحذية</button></nav>
+<div class="cart-ov" id="cartOv" onclick="ovClick(event)"><div class="cart-pan"><div class="cart-hd"><h3 id="cartTitle">🛒 سلة الشراء</h3><button class="cart-x" onclick="closeCart()">✕</button></div><div class="cart-body" id="cartBody"></div><div class="cart-ft"><div class="tots"><div class="tr"><span id="lSub">المجموع الجزئي</span><span id="vSub">0 دج</span></div><div class="tr"><span id="lDel">التوصيل</span><span style="color:var(--ok)" id="vDel">مجاني 🎁</span></div><div class="tr big"><span id="lTot">الإجمالي</span><span id="vTot">0 دج</span></div></div><button class="go-btn" id="goBtn" onclick="goCheckout()" disabled><span id="goTxt">المتابعة للدفع ←</span></button></div></div></div>
+<main>
+<div class="view on" id="storeView"><section class="hero"><div class="hblob hblob1"></div><div class="hblob hblob2"></div><div class="h-badge">✨ <span id="hBadge">التوصيل لـ 58 ولاية • الدفع عند الاستلام</span></div><h1><span id="hT1">أزياء راقية</span><br><em id="hT2">بتوقيع جزائري</em></h1><p class="hero-sub" id="hSub">اكتشف مجموعتنا الحصرية من الملابس العصرية والفاخرة. جودة استثنائية مع توصيل آمن لكل ولايات الجزائر.</p><div class="hero-btns"><button class="btn-c" onclick="document.getElementById('prodsSec').scrollIntoView({behavior:'smooth'})">🛍️ <span id="hB1">تصفح المنتجات</span></button><button class="btn-gw" onclick="filterCat('medical')">🏥 <span id="hB2">الملابس الطبية</span></button></div></section><section class="cats"><h2 class="sec-t"><span id="catT">تصفح حسب </span><em id="catT2">الفئة</em></h2><div class="cat-tabs"><button class="cat-tab on" data-cat="all" onclick="filterCat('all')">🛍️ <span id="ct-all">كل المنتجات</span></button><button class="cat-tab" data-cat="shirts" onclick="filterCat('shirts')">👔 <span id="ct-shirts">القمصان</span></button><button class="cat-tab" data-cat="pants" onclick="filterCat('pants')">👖 <span id="ct-pants">السراويل</span></button><button class="cat-tab" data-cat="medical" onclick="filterCat('medical')">🏥 <span id="ct-medical">ملابس طبية</span></button><button class="cat-tab" data-cat="shoes" onclick="filterCat('shoes')">👟 <span id="ct-shoes">الأحذية</span></button></div></section><section class="prods" id="prodsSec"><div class="prods-hd"><h2 class="tt" id="prodTitle">جميع المنتجات</h2><p class="ct" id="prodCount">7 منتجات</p></div><div class="grid" id="prodGrid"></div></section></div>
+<div class="view" id="checkoutView"><div class="co-pg"><div class="pg-hd"><button class="bk" onclick="goTo('store')">←</button><h2 id="coTitle">إتمام الطلب</h2></div><div class="cod-note"><div class="ico">💵</div><div><h4 id="codH">الدفع عند الاستلام</h4><p id="codP">لا تدفع الآن! سيتم الدفع فقط عند وصول طلبك. نوصل لـ 58 ولاية في الجزائر.</p></div></div><div class="f-card"><h3>👤 <span id="fCardH">معلومات التوصيل</span></h3><div class="field"><label class="f-lbl" for="fName"><span class="req">★ </span><span id="lName">الاسم الكامل</span></label><input class="f-in" id="fName" type="text" autocomplete="name"></div><div class="field"><label class="f-lbl" for="fPhone"><span class="req">★ </span><span id="lPhone">رقم الهاتف</span></label><input class="f-in" id="fPhone" type="tel" placeholder="0555 123 456"></div><div class="field"><label class="f-lbl" for="fWilaya"><span class="req">★ </span><span id="lWilaya">الولاية</span></label><select class="f-sel" id="fWilaya"></select></div><div class="field"><label class="f-lbl" for="fAddr"><span class="req">★ </span><span id="lAddr">العنوان التفصيلي</span></label><input class="f-in" id="fAddr" type="text"></div><div class="field"><label class="f-lbl" for="fNotes"><span id="lNotes">ملاحظات (اختياري)</span></label><input class="f-in" id="fNotes" type="text"></div></div><div class="f-card"><h3>🛒 <span id="sumH">ملخص الطلب</span></h3><div class="s-items" id="sumItems"></div><div class="s-total"><span id="sumTotL">الإجمالي النهائي</span><span id="sumTotV">0 دج</span></div></div><button class="sub-btn" onclick="placeOrder()">✅ <span id="subTxt">تأكيد الطلب — الدفع عند الاستلام</span></button></div></div>
+<div class="view" id="successView"><div class="ok-pg"><div class="ok-card"><div class="ok-ico">✅</div><h2 id="okH">تم تأكيد طلبك! 🎉</h2><p id="okP">شكراً لثقتك بـ ModaGrid. سيتواصل معك فريقنا قريباً لتأكيد موعد التوصيل.</p><div class="ok-ref" id="okRef">📦 #MG-000001</div><div class="ok-btns"><button class="btn-n" onclick="goTo('store')">← <span id="okS">العودة للمتجر</span></button><button class="btn-on" onclick="goTo('admin')">📊 <span id="okA">لوحة الطلبات</span></button></div></div></div></div>
+<div class="view" id="adminView"><div class="adm-lg" id="admLg"><div class="lg-card"><div class="lg-ico">🔐</div><h2 id="admLgH">لوحة التحكم</h2><p class="sub" id="admLgS">أدخل كلمة المرور للوصول إلى لوحة الإدارة</p><div class="field"><input class="f-in" id="passIn" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()"></div><button class="lg-btn" onclick="adminLogin()">🔑 <span id="admEnter">دخول</span></button><p class="hint-t" id="admHint">كلمة المرور: admin2024</p><button class="bk-link" onclick="goTo('store')">← <span id="admBack">العودة للمتجر</span></button></div></div><div class="adm-dash hide" id="admDash"><div class="adm-top"><h2>⚙️ <span id="admDashH">لوحة تحكم المدير</span></h2><div class="adm-acts"><button class="adm-bk" onclick="goTo('store')">← <span id="admStore">المتجر</span></button><button class="lg-out" onclick="adminLogout()">🚪 <span id="admOut">خروج</span></button></div></div><div class="stats" id="admStats"></div><div class="adm-tabs"><button class="a-tab on" data-tab="products" onclick="switchTab('products')">📦 <span id="tabProd">المنتجات</span></button><button class="a-tab" data-tab="orders" onclick="switchTab('orders')">📋 <span id="tabOrd">الطلبات</span><span class="cn hide" id="ordCn"></span></button></div><div class="a-tc on" id="tc-products"><div class="tbl-w"><table class="tbl"><thead><tr><th id="thProd">المنتج</th><th id="thCat">الفئة</th><th id="thPrice">السعر (دج)</th><th id="thStock">المخزون</th><th id="thStatus">الحالة</th><th id="thAction">تحديث</th></tr></thead><tbody id="prodTbody"></tbody></table></div></div><div class="a-tc" id="tc-orders"><div id="ordersWrap"></div></div></div></div>
+</main>
+<div class="toast-w" id="toastW"></div>
+<script>
+'use strict';
+const PASS='admin2024';
+const PRODS=[{id:1,cat:'shirts',catAr:'قمصان',catFr:'Chemises',ar:'قميص كاجوال قطني',fr:'Chemise Casual Coton',price:3200,stock:15,isNew:true,cAr:['أبيض','أزرق سماوي','أسود'],cFr:['Blanc','Bleu Ciel','Noir'],cV:['#F5F4F0','#87CEEB','#1C1C2E'],sizes:['M','L','XL','XXL'],img:'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=500&fit=crop&q=80'},{id:2,cat:'shirts',catAr:'قمصان',catFr:'Chemises',ar:'قميص كلاسيك رسمي',fr:'Chemise Classique Formelle',price:3800,stock:8,isNew:false,cAr:['أبيض','رمادي فاتح'],cFr:['Blanc','Gris Clair'],cV:['#F5F4F0','#D1D5DB'],sizes:['L','XL','XXL'],img:'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=400&h=500&fit=crop&q=80'},{id:3,cat:'pants',catAr:'سراويل',catFr:'Pantalons',ar:'سروال جينز عصري',fr:'Jean Moderne Slim',price:4200,stock:12,isNew:true,cAr:['أزرق داكن','أزرق فاتح','أسود'],cFr:['Bleu Foncé','Bleu Clair','Noir'],cV:['#1E3A5F','#6B9EC4','#1C1C2E'],sizes:['30','32','34','36'],img:'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=500&fit=crop&q=80'},{id:4,cat:'pants',catAr:'سراويل',catFr:'Pantalons',ar:'سروال كلاسيك قماش',fr:'Pantalon Classique Tissu',price:3900,stock:0,isNew:false,cAr:['بني','أسود','رمادي'],cFr:['Marron','Noir','Gris'],cV:['#8B5E3C','#1C1C2E','#6B7280'],sizes:['32','34','36'],img:'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=400&h=500&fit=crop&q=80'},{id:5,cat:'medical',catAr:'ملابس طبية',catFr:'Scrubs Médicaux',ar:'طقم سكراب طبي احترافي',fr:'Ensemble Scrub Médical Premium',price:4800,stock:20,isNew:true,cAr:['أزرق ملكي','أخضر جراحي','كحلي'],cFr:['Bleu Royal','Vert Chirurgical','Marine'],cV:['#4169E1','#2D8653','#0D1B2A'],sizes:['S','M','L','XL','XXL'],img:'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=500&fit=crop&q=80'},{id:6,cat:'shoes',catAr:'أحذية',catFr:'Chaussures',ar:'حذاء رياضي مريح',fr:'Baskets Confortables',price:5500,stock:10,isNew:false,cAr:['أبيض كامل','أسود/رمادي'],cFr:['Blanc Total','Noir/Gris'],cV:['#F5F5F5','#374151'],sizes:['40','41','42','43','44'],img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=500&fit=crop&q=80'},{id:7,cat:'shoes',catAr:'أحذية',catFr:'Chaussures',ar:'حذاء كلاسيك جلدي',fr:'Chaussures Classiques Cuir',price:6800,stock:6,isNew:false,cAr:['بني داكن','أسود'],cFr:['Marron Foncé','Noir'],cV:['#5D3A1A','#1C1C2E'],sizes:['41','42','43'],img:'https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=400&h=500&fit=crop&q=80'}];
+const WILAYAS=['01 - أدرار','02 - الشلف','03 - الأغواط','04 - أم البواقي','05 - باتنة','06 - بجاية','07 - بسكرة','08 - بشار','09 - البليدة','10 - البويرة','11 - تمنراست','12 - تبسة','13 - تلمسان','14 - تيارت','15 - تيزي وزو','16 - الجزائر','17 - الجلفة','18 - جيجل','19 - سطيف','20 - سعيدة','21 - سكيكدة','22 - سيدي بلعباس','23 - عنابة','24 - قالمة','25 - قسنطينة','26 - المدية','27 - مستغانم','28 - المسيلة','29 - معسكر','30 - ورقلة','31 - وهران','32 - البيض','33 - إليزي','34 - برج بوعريريج','35 - بومرداس','36 - الطارف','37 - تندوف','38 - تيسمسيلت','39 - الوادي','40 - خنشلة','41 - سوق أهراس','42 - تيبازة','43 - ميلة','44 - عين الدفلى','45 - النعامة','46 - عين تموشنت','47 - غرداية','48 - غليزان','49 - المغير','50 - المنيعة','51 - أولاد جلال','52 - برج باجي مختار','53 - بني عباس','54 - تيميمون','55 - تقرت','56 - جانت','57 - عين صالح','58 - عين قزام'];
+const S={prods:[],cart:[],orders:[],lang:'ar',cat:'all',view:'store',auth:false,orderNum:1,sel:{}};
+const t=(ar,fr)=>S.lang==='ar'?ar:fr;
+const $=id=>document.getElementById(id);
+const $$=s=>document.querySelectorAll(s);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const emoji={shirts:'👔',pants:'👖',medical:'🏥',shoes:'👟'};
+const TX={ar:{cartTitle:'🛒 سلة الشراء',lSub:'المجموع الجزئي',lDel:'التوصيل',vDel:'مجاني 🎁',lTot:'الإجمالي',goTxt:'المتابعة للدفع ←',hBadge:'التوصيل لـ 58 ولاية • الدفع عند الاستلام',hT1:'أزياء راقية',hT2:'بتوقيع جزائري',hSub:'اكتشف مجموعتنا الحصرية من الملابس العصرية والفاخرة. جودة استثنائية مع توصيل آمن لكل ولايات الجزائر.',hB1:'تصفح المنتجات',hB2:'الملابس الطبية',catT:'تصفح حسب ',catT2:'الفئة','ct-all':'كل المنتجات','ct-shirts':'القمصان','ct-pants':'السراويل','ct-medical':'ملابس طبية','ct-shoes':'الأحذية',coTitle:'إتمام الطلب',codH:'الدفع عند الاستلام',codP:'لا تدفع الآن! سيتم الدفع فقط عند وصول طلبك. نوصل لـ 58 ولاية في الجزائر.',fCardH:'معلومات التوصيل',lName:'الاسم الكامل',lPhone:'رقم الهاتف',lWilaya:'الولاية',lAddr:'العنوان التفصيلي',lNotes:'ملاحظات (اختياري)',sumH:'ملخص الطلب',sumTotL:'الإجمالي النهائي',subTxt:'تأكيد الطلب — الدفع عند الاستلام',okH:'تم تأكيد طلبك! 🎉',okP:'شكراً لثقتك بـ ModaGrid. سيتواصل معك فريقنا قريباً لتأكيد موعد التوصيل.',okS:'العودة للمتجر',okA:'لوحة الطلبات',admLgH:'لوحة التحكم',admLgS:'أدخل كلمة المرور للوصول إلى لوحة الإدارة',admEnter:'دخول',admHint:'كلمة المرور: admin2024',admBack:'العودة للمتجر',admDashH:'لوحة تحكم المدير',admStore:'المتجر',admOut:'خروج',tabProd:'المنتجات',tabOrd:'الطلبات',thProd:'المنتج',thCat:'الفئة',thPrice:'السعر (دج)',thStock:'المخزون',thStatus:'الحالة',thAction:'تحديث',stIn:'متوفر',stLw:'ينفد',stOt:'نفد المخزون',newBdg:'جديد',oosBdg:'نفد المخزون',lowBdg:'آخر قطع',addBtn:'أضف للسلة',oosBtn:'نفدت الكمية',addedBtn:'تمت الإضافة!',clrLbl:'اللون:',szLbl:'المقاس:',emptyCart:'السلة فارغة',emptyCartSub:'أضف منتجات للبدء',emptyOrd:'لا توجد طلبات بعد',emptyOrdSub:'ستظهر الطلبات هنا عند استلامها',fNamePh:'مثال: أحمد بن علي',fAddrPh:'الحي، الشارع، رقم البناية...',fNotesPh:'تعليمات خاصة...',wDef:'-- اختر ولايتك --',tAdded:'أضيف للسلة ✓',tUpd:'تم تحديث الكمية ✓',tRem:'تم حذف المنتج',tLoginOk:'مرحباً بك، مدير! ✓',tLoginFail:'كلمة المرور خاطئة!',tLogout:'تم تسجيل الخروج',tSaved:'تم التحديث ✓',tOrderOk:'تم استلام طلبك بنجاح 🎉',tStOk:'تم تحديث الحالة',eErrName:'الرجاء إدخال الاسم الكامل',eErrPhone:'أدخل رقم هاتف جزائري صحيح',eErrWilaya:'الرجاء اختيار الولاية',eErrAddr:'الرجاء إدخال العنوان التفصيلي',stAll:'إجمالي الطلبات',stRev:'المبيعات (دج)',stProds:'إجمالي المنتجات',stOos:'نفد المخزون',ordN:'رقم الطلب',ordDate:'التاريخ',ordClient:'العميل',ordPhone:'الهاتف',ordWilaya:'الولاية',ordTotal:'الإجمالي',ordStatus:'الحالة',stPending:'معلق',stConfirmed:'مؤكد',stDelivered:'تم التوصيل',stCancelled:'ملغي'},fr:{cartTitle:'🛒 Panier',lSub:'Sous-total',lDel:'Livraison',vDel:'Gratuit 🎁',lTot:'Total',goTxt:'Passer à la caisse →',hBadge:'Livraison dans 58 wilayas • Paiement à la livraison',hT1:'Mode Élégante',hT2:'Touche Algérienne',hSub:"Découvrez notre collection exclusive. Livraison dans toutes les wilayas d'Algérie.",hB1:'Voir les produits',hB2:'Scrubs Médicaux',catT:'Filtrer par ',catT2:'Catégorie','ct-all':'Tous les produits','ct-shirts':'Chemises','ct-pants':'Pantalons','ct-medical':'Scrubs Médicaux','ct-shoes':'Chaussures',coTitle:'Finaliser la commande',codH:'Paiement à la livraison',codP:"Ne payez pas maintenant! Paiement à la réception.",fCardH:'Informations de livraison',lName:'Nom complet',lPhone:'Numéro de téléphone',lWilaya:'Wilaya',lAddr:'Adresse détaillée',lNotes:'Notes (optionnel)',sumH:'Résumé de commande',sumTotL:'Total final',subTxt:'Confirmer la commande — Paiement à la livraison',okH:'Commande confirmée! 🎉',okP:'Merci de votre confiance en ModaGrid.',okS:'Retour au magasin',okA:'Tableau de bord',admLgH:'Panneau Admin',admLgS:"Entrez le mot de passe",admEnter:'Se connecter',admHint:'Mot de passe: admin2024',admBack:'Retour',admDashH:"Panneau d'administration",admStore:'Magasin',admOut:'Déconnexion',tabProd:'Produits',tabOrd:'Commandes',thProd:'Produit',thCat:'Catégorie',thPrice:'Prix (DA)',thStock:'Stock',thStatus:'Statut',thAction:'Mettre à jour',stIn:'Disponible',stLw:'Faible',stOt:'Épuisé',newBdg:'Nouveau',oosBdg:'Épuisé',lowBdg:'Dernières pièces',addBtn:'Ajouter au panier',oosBtn:'Épuisé',addedBtn:'Ajouté!',clrLbl:'Couleur:',szLbl:'Taille:',emptyCart:'Panier vide',emptyCartSub:'Ajoutez des produits',emptyOrd:"Aucune commande",emptyOrdSub:'Les commandes apparaîtront ici',fNamePh:'Ex: Ahmed Ben Ali',fAddrPh:'Quartier, rue, numéro...',fNotesPh:'Instructions...',wDef:'-- Choisir votre wilaya --',tAdded:'Ajouté au panier ✓',tUpd:'Quantité mise à jour ✓',tRem:'Produit supprimé',tLoginOk:'Bienvenue, Admin! ✓',tLoginFail:'Mot de passe incorrect!',tLogout:'Déconnexion effectuée',tSaved:'Mis à jour ✓',tOrderOk:'Commande reçue 🎉',tStOk:'Statut mis à jour',eErrName:'Entrez votre nom',eErrPhone:'Numéro invalide',eErrWilaya:'Choisir wilaya',eErrAddr:'Entrez votre adresse',stAll:'Total commandes',stRev:'Ventes (DA)',stProds:'Total produits',stOos:'Épuisés',ordN:'Commande',ordDate:'Date',ordClient:'Client',ordPhone:'Téléphone',ordWilaya:'Wilaya',ordTotal:'Total',ordStatus:'Statut',stPending:'En attente',stConfirmed:'Confirmé',stDelivered:'Livré',stCancelled:'Annulé'}};
+const tx=k=>TX[S.lang][k]||k;
+function init(){S.prods=PRODS.map(p=>({...p}));PRODS.forEach(p=>{S.sel[p.id]={c:0,s:0};});const wSel=$('fWilaya');const def=document.createElement('option');def.value='';def.textContent=tx('wDef');wSel.appendChild(def);WILAYAS.forEach(w=>{const o=document.createElement('option');o.value=w;o.textContent=w;wSel.appendChild(o);});renderProds();renderCart();applyLang();}
+function goTo(v){closeCart();$$('.view').forEach(el=>el.classList.remove('on'));S.view=v;$(v+'View').classList.add('on');window.scrollTo({top:0,behavior:'smooth'});if(v==='admin'){if(S.auth){$('admLg').classList.add('hide');$('admDash').classList.remove('hide');renderAdmin();}else{$('admLg').classList.remove('hide');$('admDash').classList.add('hide');setTimeout(()=>$('passIn').focus(),300);}}if(v==='checkout')renderCheckout();applyLang();}
+function toggleLang(){S.lang=S.lang==='ar'?'fr':'ar';$('langBtn').textContent=S.lang==='ar'?'FR':'AR';applyLang();renderProds();renderCart();if(S.auth&&S.view==='admin')renderAdmin();}
+function applyLang(){['cartTitle','lSub','lDel','vDel','lTot','goTxt','hBadge','hT1','hT2','hSub','hB1','hB2','catT','catT2','ct-all','ct-shirts','ct-pants','ct-medical','ct-shoes','coTitle','codH','codP','fCardH','lName','lPhone','lWilaya','lAddr','lNotes','sumH','sumTotL','subTxt','okH','okP','okS','okA','admLgH','admLgS','admEnter','admHint','admBack','admDashH','admStore','admOut','tabProd','tabOrd','thProd','thCat','thPrice','thStock','thStatus','thAction'].forEach(k=>{const el=$(k);if(el)el.textContent=tx(k);});const navMap={all:{ar:'كل المنتجات',fr:'Tous'},shirts:{ar:'👔 القمصان',fr:'👔 Chemises'},pants:{ar:'👖 السراويل',fr:'👖 Pantalons'},medical:{ar:'🏥 ملابس طبية',fr:'🏥 Médicaux'},shoes:{ar:'👟 الأحذية',fr:'👟 Chaussures'}};$$('[data-cat]').forEach(el=>{const c=el.dataset.cat;if(navMap[c])el.textContent=t(navMap[c].ar,navMap[c].fr);});const fN=$('fName');if(fN)fN.placeholder=tx('fNamePh');const fA=$('fAddr');if(fA)fA.placeholder=tx('fAddrPh');const fNo=$('fNotes');if(fNo)fNo.placeholder=tx('fNotesPh');const wO=document.querySelector('#fWilaya option');if(wO)wO.textContent=tx('wDef');}
+function renderProds(){const grid=$('prodGrid'),ttEl=$('prodTitle'),ctEl=$('prodCount');const filtered=S.cat==='all'?S.prods:S.prods.filter(p=>p.cat===S.cat);const titles={all:{ar:'جميع المنتجات',fr:'Tous les produits'},shirts:{ar:'القمصان',fr:'Chemises'},pants:{ar:'السراويل',fr:'Pantalons'},medical:{ar:'الملابس الطبية',fr:'Scrubs Médicaux'},shoes:{ar:'الأحذية',fr:'Chaussures'}};const tt=titles[S.cat]||titles.all;if(ttEl)ttEl.textContent=t(tt.ar,tt.fr);if(ctEl)ctEl.textContent=t(`${filtered.length} منتجات`,`${filtered.length} produits`);if(!grid)return;if(filtered.length===0){grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--g400)"><div style="font-size:52px">🔍</div><h3 style="color:var(--g500);margin-top:12px">${t('لا توجد منتجات','Aucun produit')}</h3></div>`;return;}grid.innerHTML=filtered.map((p,i)=>cardHTML(p,i)).join('');}
+function cardHTML(p,idx){const oos=p.stock===0,low=p.stock>0&&p.stock<=5;const sel=S.sel[p.id]||{c:0,s:0};const em=emoji[p.cat]||'🛍️';const dots=p.cV.map((cv,i)=>{const lt=(cv==='#F5F4F0'||cv==='#F5F5F5'||cv==='#D1D5DB');return `<div class="dot${i===sel.c?' on':''}" style="background:${cv};${lt?'border:2px solid var(--g200);':''}" onclick="pickColor(${p.id},${i})" title="${t(p.cAr[i],p.cFr[i])}"></div>`;}).join('');const szs=p.sizes.map((s,i)=>`<button class="sz${i===sel.s?' on':''}" onclick="pickSize(${p.id},${i})">${s}</button>`).join('');return `<div class="card${oos?' oos':''}" style="animation-delay:${idx*.07}s"><div class="img-w" id="iw${p.id}"><img src="${p.img}" alt="${t(p.ar,p.fr)}" loading="lazy" onerror="this.style.display='none';var w=document.getElementById('iw${p.id}');w.style.background='linear-gradient(135deg,#162439,#0D1B2A)';if(!w.querySelector('.fb'))w.insertAdjacentHTML('beforeend','<div class=\'fb\' style=\'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:60px\'>${em}</div>')"><div class="img-shine"></div><div class="badges">${p.isNew?`<span class="bdg bdg-new">${tx('newBdg')}</span>`:''} ${oos?`<span class="bdg bdg-oos">${tx('oosBdg')}</span>`:''} ${low?`<span class="bdg bdg-low">${tx('lowBdg')}</span>`:''}</div></div><div class="card-body"><div class="c-cat">${t(p.catAr,p.catFr)}</div><div class="c-name">${t(p.ar,p.fr)}</div><div class="c-sub">${S.lang==='ar'?p.fr:p.ar}</div><div class="c-price">${p.price.toLocaleString()} <small>${t('دج','DA')}</small></div><div class="sel-lbl">${tx('clrLbl')} <strong id="cl${p.id}">${t(p.cAr[sel.c],p.cFr[sel.c])}</strong></div><div class="dots" id="dt${p.id}">${dots}</div><div class="sel-lbl">${tx('szLbl')} <strong id="sl${p.id}">${p.sizes[sel.s]}</strong></div><div class="szs" id="sz${p.id}">${szs}</div><div class="c-foot"><button class="add-btn" id="ab${p.id}" onclick="addToCart(${p.id})" ${oos?'disabled':''}>${oos?`❌ ${tx('oosBtn')}`:`🛒 ${tx('addBtn')}`}</button></div></div></div>`;}
+function filterCat(cat){S.cat=cat;$$('[data-cat]').forEach(el=>el.classList.toggle('on',el.dataset.cat===cat));renderProds();if(S.view==='store')setTimeout(()=>$('prodsSec').scrollIntoView({behavior:'smooth',block:'start'}),80);}
+function pickColor(id,i){S.sel[id].c=i;const p=S.prods.find(x=>x.id===id);if(!p)return;const dEl=$('dt'+id);if(dEl)dEl.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('on',j===i));const lEl=$('cl'+id);if(lEl)lEl.textContent=t(p.cAr[i],p.cFr[i]);}
+function pickSize(id,i){S.sel[id].s=i;const p=S.prods.find(x=>x.id===id);if(!p)return;const sEl=$('sz'+id);if(sEl)sEl.querySelectorAll('.sz').forEach((s,j)=>s.classList.toggle('on',j===i));const lEl=$('sl'+id);if(lEl)lEl.textContent=p.sizes[i];}
+function addToCart(id){const p=S.prods.find(x=>x.id===id);if(!p||p.stock===0)return;const{c,s}=S.sel[id]||{c:0,s:0};const cAr=p.cAr[c],cFr=p.cFr[c],cV=p.cV[c],size=p.sizes[s];const ex=S.cart.find(i=>i.id===id&&i.size===size&&i.cAr===cAr);if(ex){ex.qty=Math.min(ex.qty+1,p.stock);toast(tx('tUpd'),'s');}else{S.cart.push({id,ar:p.ar,fr:p.fr,cAr,cFr,cV,size,price:p.price,qty:1,img:p.img});toast(tx('tAdded'),'s');}const btn=$('ab'+id);if(btn){btn.classList.add('added');btn.textContent=`✅ ${tx('addedBtn')}`;setTimeout(()=>{btn.classList.remove('added');btn.innerHTML=`🛒 ${tx('addBtn')}`;},1600);}updateBadge();renderCart();openCart();}
+function renderCart(){const body=$('cartBody'),total=cartTotal(),c=t('دج','DA');$('vSub').textContent=`${total.toLocaleString()} ${c}`;$('vTot').textContent=`${total.toLocaleString()} ${c}`;const goBtn=$('goBtn');if(goBtn)goBtn.disabled=S.cart.length===0;if(!body)return;if(S.cart.length===0){body.innerHTML=`<div class="cart-empty"><div class="eico">🛒</div><h4>${tx('emptyCart')}</h4><p>${tx('emptyCartSub')}</p></div>`;return;}body.innerHTML=S.cart.map((item,idx)=>`<div class="c-item"><img class="ci-img" src="${item.img}" alt="" onerror="this.style.display='none'"><div class="ci-info"><div class="ci-name">${t(item.ar,item.fr)}</div><div class="ci-meta"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${item.cV};border:1px solid rgba(0,0,0,.12);vertical-align:middle;margin-left:3px"></span>${t(item.cAr,item.cFr)} · ${t('مقاس','T.')} ${item.size}</div><div class="ci-price">${(item.price*item.qty).toLocaleString()} ${c}</div><div class="ci-qty"><button class="q-b" onclick="qtyChange(${idx},-1)">−</button><span class="q-n">${item.qty}</span><button class="q-b" onclick="qtyChange(${idx},1)">+</button></div></div><button class="ci-del" onclick="removeItem(${idx})">✕</button></div>`).join('');}
+function qtyChange(idx,d){const item=S.cart[idx];if(!item)return;const pr=S.prods.find(p=>p.id===item.id);item.qty=Math.max(1,Math.min(item.qty+d,pr?pr.stock:99));renderCart();updateBadge();}
+function removeItem(idx){S.cart.splice(idx,1);renderCart();updateBadge();toast(tx('tRem'),'w');}
+function cartTotal(){return S.cart.reduce((s,i)=>s+i.price*i.qty,0);}
+function updateBadge(){const n=S.cart.reduce((s,i)=>s+i.qty,0);const el=$('cartN');if(n>0){el.textContent=n>99?'99+':n;el.classList.remove('hide');}else el.classList.add('hide');}
+function openCart(){$('cartOv').classList.add('open');renderCart();}
+function closeCart(){$('cartOv').classList.remove('open');}
+function ovClick(e){if(e.target===$('cartOv'))closeCart();}
+function goCheckout(){if(S.cart.length===0)return;closeCart();goTo('checkout');}
+function renderCheckout(){const items=$('sumItems'),totEl=$('sumTotV');if(!items)return;const c=t('دج','DA'),total=cartTotal();items.innerHTML=S.cart.map(item=>`<div class="s-item"><img class="s-img" src="${item.img}" alt="" onerror="this.style.display='none'"><div class="s-info"><div class="s-name">${t(item.ar,item.fr)}</div><div class="s-meta">${t(item.cAr,item.cFr)} · ${t('مقاس','T.')} ${item.size} × ${item.qty}</div></div><div class="s-price">${(item.price*item.qty).toLocaleString()} ${c}</div></div>`).join('');if(totEl)totEl.textContent=`${total.toLocaleString()} ${c}`;}
+function placeOrder(){const name=$('fName').value.trim(),phone=$('fPhone').value.trim().replace(/\s/g,''),wilaya=$('fWilaya').value,addr=$('fAddr').value.trim(),notes=$('fNotes').value.trim();if(!name){toast(tx('eErrName'),'e');$('fName').focus();return;}if(!/^0[5-7]\d{8}$/.test(phone)){toast(tx('eErrPhone'),'e');$('fPhone').focus();return;}if(!wilaya){toast(tx('eErrWilaya'),'e');$('fWilaya').focus();return;}if(!addr){toast(tx('eErrAddr'),'e');$('fAddr').focus();return;}if(S.cart.length===0)return;const id=`MG-${String(S.orderNum).padStart(6,'0')}`;const order={id,date:new Date().toLocaleString('ar-DZ'),timestamp:new Date().toISOString(),customer:{name,phone,wilaya,address:addr,notes},items:S.cart.map(i=>({name:i.ar,nameFr:i.fr,color:i.cAr,size:i.size,qty:i.qty,price:i.price,subtotal:i.price*i.qty})),total:cartTotal(),status:'pending',payment:'COD'};S.orders.push(order);S.orderNum++;console.log('🚀 [ModaGrid] New Order:',JSON.stringify(order,null,2));S.cart=[];['fName','fPhone','fAddr','fNotes'].forEach(fid=>{const el=$(fid);if(el)el.value='';});$('fWilaya').value='';updateBadge();$('okRef').textContent=`📦 ${id}`;goTo('success');toast(tx('tOrderOk'),'s');}
+function adminLogin(){const v=$('passIn').value;if(v===PASS){S.auth=true;$('admLg').classList.add('hide');$('admDash').classList.remove('hide');$('passIn').value='';renderAdmin();toast(tx('tLoginOk'),'s');}else{toast(tx('tLoginFail'),'e');$('passIn').value='';$('passIn').focus();}}
+function adminLogout(){S.auth=false;$('admLg').classList.remove('hide');$('admDash').classList.add('hide');$('passIn').value='';toast(tx('tLogout'),'w');}
+function switchTab(tab){$$('.a-tab').forEach(el=>el.classList.toggle('on',el.dataset.tab===tab));$$('.a-tc').forEach(el=>el.classList.toggle('on',el.id===`tc-${tab}`));}
+function renderAdmin(){renderStats();renderProdTable();renderOrdersTable();const cn=$('ordCn');if(cn){if(S.orders.length>0){cn.textContent=S.orders.length;cn.classList.remove('hide');}else cn.classList.add('hide');}applyLang();}
+function renderStats(){const el=$('admStats');if(!el)return;const rev=S.orders.reduce((s,o)=>s+o.total,0),oos=S.prods.filter(p=>p.stock===0).length;el.innerHTML=`<div class="stat"><div class="st-ico c">📦</div><div><div class="st-v">${S.orders.length}</div><div class="st-k">${tx('stAll')}</div></div></div><div class="stat"><div class="st-ico g">💰</div><div><div class="st-v">${rev.toLocaleString()}</div><div class="st-k">${tx('stRev')}</div></div></div><div class="stat"><div class="st-ico n">🛍️</div><div><div class="st-v">${S.prods.length}</div><div class="st-k">${tx('stProds')}</div></div></div><div class="stat"><div class="st-ico o">⚠️</div><div><div class="st-v">${oos}</div><div class="st-k">${tx('stOos')}</div></div></div>`;}
+function renderProdTable(){const tb=$('prodTbody');if(!tb)return;tb.innerHTML=S.prods.map(p=>{const oos=p.stock===0,low=p.stock>0&&p.stock<=5;const bc=oos?'s-ot':low?'s-lw':'s-in',bl=oos?tx('stOt'):low?tx('stLw'):tx('stIn'),bd=oos?'🔴':low?'🟡':'🟢';return `<tr><td><div class="p-wrap"><img class="p-img" src="${p.img}" alt="" onerror="this.style.display='none'"><div><div class="p-nm">${t(p.ar,p.fr)}</div><div class="p-fr">${S.lang==='ar'?p.fr:p.ar}</div></div></div></td><td>${t(p.catAr,p.catFr)}</td><td><input class="e-in w" type="number" id="ep${p.id}" value="${p.price}" min="100" step="100"></td><td><input class="e-in" type="number" id="es${p.id}" value="${p.stock}" min="0"></td><td><span class="s-bdg ${bc}">${bd} ${bl}</span></td><td><button class="upd" onclick="saveProd(${p.id})">${tx('thAction')} ✓</button></td></tr>`;}).join('');}
+function saveProd(id){const p=S.prods.find(x=>x.id===id);if(!p)return;const np=parseInt($('ep'+id).value)||p.price,ns=parseInt($('es'+id).value);if(np<100||isNaN(ns)||ns<0){toast('❌ قيمة غير صالحة','e');return;}p.price=np;p.stock=ns;toast(`${tx('tSaved')} "${t(p.ar,p.fr)}"`, 's');renderStats();renderProdTable();renderProds();}
+function renderOrdersTable(){const wrap=$('ordersWrap');if(!wrap)return;if(S.orders.length===0){wrap.innerHTML=`<div class="empty-adm"><div class="eico">📋</div><h4>${tx('emptyOrd')}</h4><p>${tx('emptyOrdSub')}</p></div>`;return;}const stM={pending:'stPending',confirmed:'stConfirmed',delivered:'stDelivered',cancelled:'stCancelled'};wrap.innerHTML=`<div class="tbl-w"><table class="tbl"><thead><tr><th>${tx('ordN')}</th><th>${tx('ordDate')}</th><th>${tx('ordClient')}</th><th>${tx('ordPhone')}</th><th>${tx('ordWilaya')}</th><th>${tx('ordTotal')}</th><th>${tx('ordStatus')}</th><th>JSON</th></tr></thead><tbody>${S.orders.map((o,i)=>`<tr><td><strong style="color:var(--cyan2)">${esc(o.id)}</strong></td><td style="font-size:11.5px;white-space:nowrap">${esc(o.date)}</td><td><strong>${esc(o.customer.name)}</strong></td><td style="direction:ltr;text-align:left;font-size:12px">${esc(o.customer.phone)}</td><td style="font-size:11.5px">${esc(o.customer.wilaya)}</td><td><strong>${o.total.toLocaleString()} ${t('دج','DA')}</strong></td><td><select class="o-sel" onchange="setStatus(${i},this.value)">${['pending','confirmed','delivered','cancelled'].map(s=>`<option value="${s}"${o.status===s?' selected':''}>${tx(stM[s])}</option>`).join('')}</select></td><td><button class="j-btn" onclick="toggleJSON(${i})">JSON</button><div class="j-box hide" id="jb${i}">${esc(JSON.stringify(o,null,2))}</div></td></tr>`).join('')}</tbody></table></div>`;}
+function setStatus(i,s){if(S.orders[i]){S.orders[i].status=s;renderStats();toast(tx('tStOk'),'s');}}
+function toggleJSON(i){const el=$('jb'+i);if(el)el.classList.toggle('hide');}
+function toast(msg,type='i'){const w=$('toastW');if(!w)return;const icons={s:'✅',e:'❌',w:'⚠️',i:'ℹ️'};const d=document.createElement('div');d.className=`toast ${type}`;d.innerHTML=`<span>${icons[type]||'ℹ️'}</span> ${esc(msg)}`;w.appendChild(d);setTimeout(()=>{d.style.animation='toastIn .3s reverse ease both';setTimeout(()=>d.remove(),320);},3200);}
+document.addEventListener('DOMContentLoaded',init);
+</script>
 </body>
 </html>

@@ -508,9 +508,10 @@ function init(){
 /* VIEWS */
 function goTo(v){
   closeCart();
-  $$('.view').forEach(el=>el.classList.remove('on'));
+  $$('.view').forEach(el=>{el.classList.remove('on');el.style.display='';});
+  document.body.style.background='';
   S.view=v;$(v+'View').classList.add('on');
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo(0,0);
   if(v==='admin'){
     if(S.auth){$('admLg').classList.add('hide');$('admDash').classList.remove('hide');renderAdmin();}
     else{$('admLg').classList.remove('hide');$('admDash').classList.add('hide');setTimeout(()=>$('passIn').focus(),300);}
@@ -667,9 +668,21 @@ function placeOrder(){
 
 /* ADMIN */
 function adminLogin(){
-  const v=$('passIn').value;
-  if(v===PASS){S.auth=true;$('passIn').value='';goTo('admin');toast(tx('tLoginOk'),'s');}
-  else{toast(tx('tLoginFail'),'e');$('passIn').value='';$('passIn').focus();}
+  var v=$('passIn').value;
+  if(v!==PASS){toast(tx('tLoginFail'),'e');$('passIn').value='';$('passIn').focus();return;}
+  S.auth=true;
+  S.view='admin';
+  $('passIn').value='';
+  $$('.view').forEach(function(el){el.classList.remove('on');el.style.display='none';});
+  $('adminView').style.display='block';
+  $('adminView').classList.add('on');
+  $('admLg').style.display='none';
+  $('admDash').style.display='block';
+  $('admDash').classList.remove('hide');
+  document.body.style.background='#f0f4f8';
+  window.scrollTo(0,0);
+  renderAdmin();
+  toast(tx('tLoginOk'),'s');
 }
 function adminLogout(){S.auth=false;S.view='store';$$('.view').forEach(el=>{el.classList.remove('on');el.style.display='';});$('storeView').style.display='block';$('storeView').classList.add('on');document.body.style.background='';$('passIn').value='';toast(tx('tLogout'),'w');}
 function switchTab(tab){$$('.a-tab').forEach(el=>el.classList.toggle('on',el.dataset.tab===tab));$$('.a-tc').forEach(el=>el.classList.toggle('on',el.id===`tc-${tab}`));}

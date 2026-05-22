@@ -671,7 +671,7 @@ function adminLogin(){
   if(v===PASS){S.auth=true;$('passIn').value='';goTo('admin');toast(tx('tLoginOk'),'s');}
   else{toast(tx('tLoginFail'),'e');$('passIn').value='';$('passIn').focus();}
 }
-function adminLogout(){S.auth=false;$('admLg').classList.remove('hide');$('admDash').classList.add('hide');$('passIn').value='';toast(tx('tLogout'),'w');}
+function adminLogout(){S.auth=false;S.view='store';$$('.view').forEach(el=>{el.classList.remove('on');el.style.display='';});$('storeView').style.display='block';$('storeView').classList.add('on');document.body.style.background='';$('passIn').value='';toast(tx('tLogout'),'w');}
 function switchTab(tab){$$('.a-tab').forEach(el=>el.classList.toggle('on',el.dataset.tab===tab));$$('.a-tc').forEach(el=>el.classList.toggle('on',el.id===`tc-${tab}`));}
 function renderAdmin(){renderStats();renderProdTable();renderOrdersTable();const cn=$('ordCn');if(cn){if(S.orders.length>0){cn.textContent=S.orders.length;cn.classList.remove('hide');}else cn.classList.add('hide');}applyLang();}
 function renderStats(){
